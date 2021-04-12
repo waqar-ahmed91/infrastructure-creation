@@ -50,13 +50,13 @@ jobs:
       - run:
           name: smoke_testing
           command: |
-            URL = "https://www.google.com"
+            URL = "https://www.google.com/"
             if curl -s --head ${URL}
             then
               return 0
             else
               return 1
-            fi
+                fi
 
 workflows:
   my_workflow:
