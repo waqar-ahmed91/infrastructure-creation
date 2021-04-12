@@ -48,17 +48,19 @@ jobs:
     steps:
       - run: apk add --update curl
       - run:
-          name: smoke_testing
+          name: smoke test.
           command: |
-            URL = "https://www.google.com/"
-            if curl -s --head ${URL}
+            URL="https://blog.udacity.com/"
+            if curl -s --head ${URL} # test if blog.udacity. com exists
             then
-              return 0
+             return 0
             else
-              return 1
-                fi
+             return 1
+            fi
 
 workflows:
   my_workflow:
     jobs:
-      - smoke_test
+      - smoke_test:
+          requires:
+            - configure_infrastructure
