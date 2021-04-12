@@ -16,27 +16,48 @@
 #   my_workflow:
 #     jobs:
 #       - create_infrastructure
+# version: 2.1
 
+# jobs:
+#   configure_infrastructure:
+#     docker:
+#       - image: python:3.7-alpine3.11
+#     steps:
+#       - checkout
+#       - add_ssh_keys:
+#           fingerprints: ["42:30:73:23:12:cf:8c:b3:fa:68:90:76:16:01:2a:47"] # You can get this ID in the section where you registered the SSH Key
+#       - run:
+#           name: Install dependencies
+#           command: |
+#             apk add --update ansible # install the dependencies needed for your playbook
+#       - run:
+#           name: Configure server
+#           command: |
+#             ansible-playbook -i inventory.txt main-remote.yml
+
+# workflows:
+#   my_workflow:
+#     jobs:
+#       - configure_infrastructure
 version: 2.1
 
 jobs:
-  configure_infrastructure:
+  smoke_test:
     docker:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["42:30:73:23:12:cf:8c:b3:fa:68:90:76:16:01:2a:47"] # You can get this ID in the section where you registered the SSH Key
       - run:
-          name: Install dependencies
+          name: smoke_testing
           command: |
-            apk add --update ansible # install the dependencies needed for your playbook
-      - run:
-          name: Configure server
-          command: |
-            ansible-playbook -i inventory.txt main-remote.yml
+            if curl -s --head "www.google.come"
+            then
+              echo "Worked"
+            else
+              echo "Failed"
+            fi
 
 workflows:
   my_workflow:
     jobs:
-      - configure_infrastructure
+      - smoke_test
