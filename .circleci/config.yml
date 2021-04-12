@@ -12,9 +12,6 @@ jobs:
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name infra-creation
-      # - run:
-      #     command:  |
-      #       aws cloudformation describe-stack-events --stack-name hakimm
 workflows:
   my_workflow:
     jobs:
