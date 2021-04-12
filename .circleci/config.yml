@@ -50,7 +50,7 @@ jobs:
       - run:
           name: smoke_testing
           command: |
-            if curl -s --head "www.google.come"
+            if curl -s --head "https://www.google.come"
             then
               echo "Worked"
             else
