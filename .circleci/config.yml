@@ -50,11 +50,12 @@ jobs:
       - run:
           name: smoke_testing
           command: |
-            if curl -s --head "https://www.google.com"
+            URL = "https://www.google.com"
+            if curl -s --head ${URL}
             then
-              echo "Worked"
+              return 0
             else
-              echo "Failed"
+              return 1
             fi
 
 workflows:
