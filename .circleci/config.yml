@@ -1,11 +1,6 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
-# Use a package of configuration called an orb.
 
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-# Orchestrate or schedule a set of jobs
+version: 2.1
+
 jobs:
   create_infrastructure:
     docker:
@@ -15,12 +10,15 @@ jobs:
       - run:
           name: Ensure backend infrastructure exist
           command: |
+            pwd
+            ls -la
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name my-stack
+      # - run:
+      #     command:  |
+      #       aws cloudformation describe-stack-events --stack-name hakimm
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  my_workflow:
     jobs:
       - create_infrastructure
